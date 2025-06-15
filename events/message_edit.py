@@ -1,6 +1,8 @@
 from utils.logger import logar
-import discord
 
-async def handle_message_edit(before: discord.Message, after: discord.Message, id_monitorado: int):
-    if before.author.id == id_monitorado:
-        logar(f"{before.author.name} editou uma mensagem: {before.id}")
+async def handle_message_edit(before, after, ids_monitorados):
+    if before.author.id not in ids_monitorados:
+        return
+
+    contexto = f"{before.guild.name} / {before.channel.name}" if before.guild else "DM"
+    logar(f"[EDIT] {before.author.name} ({before.author.id}) editou mensagem ({before.id}) em {contexto}\n- Antes: {before.content}\n- Depois: {after.content}")

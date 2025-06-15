@@ -9,7 +9,7 @@ banner = r"""
     (_/(_)     
 """
 
-async def handle_ready(client: discord.Client, ID_MONITORADO: int):
+async def handle_ready(client: discord.Client, ids_monitorados):
     os.system('cls' if os.name == "nt" else 'clear')
     print()
     print(banner)
@@ -19,12 +19,6 @@ async def handle_ready(client: discord.Client, ID_MONITORADO: int):
     logar(f"Conectado como {client.user} (ID: {client.user.id})")
 
     # informações da conta monitorada
-    usuario = client.get_user(ID_MONITORADO)
-    if not usuario:
-        try:
-            usuario = await client.fetch_user(ID_MONITORADO)
-        except:
-            usuario = None
-
-    nome_monitorado = usuario.name if usuario else "Desconhecido"
-    logar(f"Monitorando o usuário {nome_monitorado} (ID: {ID_MONITORADO})")
+    for uid in ids_monitorados:
+        user = await client.fetch_user(uid)
+        logar(f"Monitorando {user.name} (ID: {uid})")

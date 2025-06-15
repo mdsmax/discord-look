@@ -1,9 +1,9 @@
 from utils.logger import logar
 
-async def handle_relationship_add(relationship, id_monitorado: int):
-    if relationship.user.id == id_monitorado:
-        logar(f"O usuário {relationship.user} te adicionou ou foi aceito como amigo.")
+async def handle_relationship_add(relationship, ids_monitorados):
+    if relationship.user.id in ids_monitorados:
+        logar(f"[AMIZADE] {relationship.user.name} ({relationship.user.id}) virou seu amigo.")
 
-async def handle_relationship_remove(relationship, id_monitorado: int):
-    if relationship.user.id == id_monitorado:
-        logar(f"O usuário {relationship.user} foi removido ou te removeu da lista de amigos.")
+async def handle_relationship_remove(relationship, ids_monitorados):
+    if relationship.user.id in ids_monitorados:
+        logar(f"[AMIZADE] {relationship.user.name} ({relationship.user.id}) removeu a amizade.")

@@ -1,6 +1,7 @@
 from utils.logger import logar
-import discord
 
-async def handle_message_delete(message: discord.Message, id_monitorado: int):
-    if message.author.id == id_monitorado:
-        logar(f"{message.author.name} deletou uma mensagem: {message.content[:100]} - {message.id}")
+async def handle_message_delete(message, ids_monitorados):
+    if message.author.id not in ids_monitorados:
+        return
+
+    logar(f"[DELETE] {message.author.name} ({message.author.id}) deletou mensagem ({message.id}) em {message.channel}: {message.content}")

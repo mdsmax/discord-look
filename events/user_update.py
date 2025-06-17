@@ -1,18 +1,14 @@
 from utils.logger import logar
-import discord
 
-async def handle_user_update(before: discord.User, after: discord.User, id_monitorado: int):
-    if after.id != id_monitorado:
+async def handle_user_update(before, after, ids_monitorados):
+    if before.id not in ids_monitorados:
         return
 
     if before.avatar != after.avatar:
-        logar(f"{after.name} mudou o avatar.")
+        logar(f"[AVATAR] {after.name} ({after.id}) trocou o avatar.")
 
     if before.banner != after.banner:
-        logar(f"{after.name} mudou o banner.")
+        logar(f"[BANNER] {after.name} ({after.id}) trocou o banner.")
 
     if before.name != after.name:
-        logar(f"Nome alterado: {before.name} > {after.name}")
-
-    if before.discriminator != after.discriminator:
-        logar(f"{after.name} mudou o discriminator: {before.discriminator} > {after.discriminator}")
+        logar(f"[NOME] Alteração de nome: {before.name} → {after.name} (ID: {before.id})")

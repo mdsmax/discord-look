@@ -1,7 +1,7 @@
 from utils.logger import logar
-import discord
 
-async def handle_typing(channel: discord.abc.Messageable, user: discord.User, when, id_monitorado: int):
-    if user.id == id_monitorado:
-        contexto = f"{channel.guild.name}/{channel.name}" if hasattr(channel, "guild") else "DM"
-        logar(f"{user.name} está digitando em {contexto}")
+async def handle_typing(channel, user, when, ids_monitorados):
+    if user.id not in ids_monitorados:
+        return
+
+    logar(f"[DIGITANDO] {user.name} ({user.id}) está digitando em {channel}.")
